@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>... args</title>
+</head>
+<body>
+    <script>
+        // ...args는 값을 배열 형태로 작성한다
+        // 최근에는 arguments보다 ...args를 쓰는 추세
+        function showArgs(...args){
+            console.log(args);
+        }
+
+        showArgs(1,2,3);
+        showArgs("고양이","강아지","햄스터");
+        showArgs();
+
+        // --------------------------------------------
+
+        function sum(...args){
+            let total = 0;
+            for(let num of args){
+            // of는 배열 객체의 각 요소를 하나씩 꺼내서 변수에 반복한다는 뜻을 가짐
+                total += num;
+            }
+            document.write(`합계 : ${total}`);
+        }
+
+        sum(10,20);
+    </script>
+</body>
+</html>

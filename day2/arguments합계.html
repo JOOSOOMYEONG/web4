@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>arguments 합계</title>
+</head>
+<body>
+    <script>
+        /*
+        sum 함수생성
+        안에 total = 0; 이라는 변수 생성 (해단 변수에는 아규먼트가 들어갈 것)
+        반복문을 통해 아규먼트 개수만틈 반복하는 코드 작성
+        total의 아규먼트의 n번쨰 값을 계속 쌓으며 더해준다.
+        아규먼트가 1,2,3,4,5라면 합계 : 15 출력
+        */
+
+        function sum(){
+            let total = 0;
+
+            for(let i = 0; i < arguments.length; i++){
+                total += arguments[i];
+            }
+            document.write(`합계 : ${total} <br>`);
+        }
+
+        sum(1,2,3,4,5);
+        sum(30,50);
+    </script>
+</body>
+</html>
