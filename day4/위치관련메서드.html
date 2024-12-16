@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위치 관련 메서드</title>
+</head>
+<body>
+    <!-- innerHeight, innerWidth -->
+    <button onclick="shoeWindowSize()">브라우저 크기 보기</button>
+    <p id="window_size"></p>
+
+    <!-- innerHTML -->
+    <div id="content">
+        <p>이 내용이 바뀔 거임</p>
+    </div>
+    <button onclick="changeContent()">innerHTML 내용 바꾸기</button>
+
+    <!-- textcontent -->
+    <div id="text-example"></div>
+    <p>
+        저는
+        <b>
+            고양이
+        </b>
+        를 좋아합니다.
+    </p>
+    <button onclick="showText()">텍스트만 보기</button>
+
+    <br>
+
+    <!-- value -->
+    <input type="text" id="name" value="기본값">
+    <button onclick="updateValue()">값 변경하기</button>
+
+    <!-- offsetHeight, clienHeight, scrollHeight -->
+    <div id="box"
+        style="
+            width: 200px;
+            height: 100px;
+            padding: 20px;
+            border: 5px solid #000
+            ;">
+        알라알라알라알라알라딘
+        <br>
+        우오우오우오우오
+    </div>
+    <button onclick="showHeights()">높이 정보</button>
+    <button>너비 정보</button>
+
+    <div
+    id="target"
+    style="
+    width: 200px;
+    height: 100px;
+    background-color: aqua;
+    "
+    >
+    위치와 크기를 확인할 박스
+    </div>
+    <button>박스 정보 보기</button>
+
+    <script>
+        /*
+        1. 브라우저 창 관련 속성
+            - innerHeight, innerWidth : 브라우저 창(window)의 크기를 다루는 속성이며, 브라우저의 뷰포트(스크롤바와 툴바를 제외한 영역)의 높이와 너비를 나타냄.
+
+        2. HTML 요소 내용 관련
+            -  innerHTML : HTML 요소 내부의 HTML 코드를 읽거나 수정
+                <div>내부의 태그와 텍스트를 모두 포함
+                div.innerHTML = '<b>hello</b>' -> 태그를 포함한 내용을 변경하겠다.
+                textcontent : HTML 요소의 텍스트만 읽거나 수정 태그를 제외하고 순수 텍스트만 가져옴.
+        */
+
+        // innerHeight, innerWidth
+        function shoeWindowSize(){
+            const height = window.innerHeight;
+            const width = window.innerWidth;
+            document.getElementById("window_size").textContent = `높이:${height}, 너비:${width}`;
+        }
+
+        // innerHTML
+        function changeContent(){
+            const div = document.getElementById("content");
+            div.innerHTML = "<h1>새로운 내용</h1><p>이제 변경되었습니다~</p>"
+        }
+
+        // textcontent
+        function showText(){
+            const div = document.getElementById("text-example");
+            alert(div.textContent);
+        }
+
+        // value : 입력 필드의 값을 읽거나 수정한다
+        function updateValue(){
+            const input = document.getElementById("name");
+            alert(`현재 값: ${input.value}`);
+            input.value = "새로운 값";
+        }
+
+        // offsetHeight, clienHeight, scrollHeight
+        function showHeights(){
+            const box = document.getElementById("box");
+            alert(
+                `offsetHeight : ${box.offsetHeight}px \n
+                clienHeight : ${box.offsetHeight}px \n
+                scrollHeight : ${box.scrollHeight}px`
+            );
+        }
+        function showWidth(){
+            const box = document.getElementById("box");
+            alert(
+                `offsetWidth : ${box.offsetWidth}px \n
+                clienWidth : ${box.clienWidth}px \n
+                scrollWidth : ${box.scrollWidth}px`
+            );
+        }
+    </script>
+</body>
+</html>
