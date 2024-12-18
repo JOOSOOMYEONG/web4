@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헤더페이드인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 5000px;
+        }
+
+        header {
+            height: 80px;
+            background-color: rgb(43, 119, 62);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            transition: 0.6s;
+            /* 천천히 사라지는 시간차를 주는 것 */
+        }
+
+        .lorem {
+            margin-top: 80px;
+            /* header에 fixed를 줘서 가려지는 걸 헤더 크기만큼 내린 것 */
+        }
+
+        #header.hide {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header id="header"></header>
+    <section class="lorem">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim id sint molestias ex ducimus illum, qui consequuntur repudiandae, ad velit cumque consequatur. Laboriosam repellendus magnam quisquam, sint omnis quasi quas.
+        </p>
+    </section>
+    <script>
+        const header = document.getElementById("header");
+        // const header = document.querySelector("#header");
+        
+        let posY = 0;
+        // 스크롤 위치값 넣을 변수 생성
+        window.addEventListener("scroll", (e) => {
+            if(posY < scrollY){
+                headerHide()
+            }else{
+                headerShow()
+            }
+            posY = window.scrollY
+        });
+
+        function headerHide(){
+            header.classList.add("hide");
+            // classList.add class를 미리 만들고 붙일 수 있음
+        };
+
+        function headerShow(){
+            header.classList.remove("hide");
+            // classList.remove "hide"라는 class를 없앨게
+        };
+    </script>
+</body>
+</html>
