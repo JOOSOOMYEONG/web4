@@ -59,7 +59,7 @@
     >
     위치와 크기를 확인할 박스
     </div>
-    <button>박스 정보 보기</button>
+    <button onclick="showRect()">박스 정보 보기</button>
 
     <script>
         /*
@@ -123,6 +123,14 @@
                 clientWidth : ${box.clientWidth}px \n
                 scrollWidth : ${box.scrollWidth}px`
             );
+        }
+
+        //getBoundingClientRect
+        function showRect(){
+            const box = document.getElementById("target");
+            const rect = box.getBoundingClientRect();
+            // x,y,width,height,top,left
+            alert(`위치: x:${rect.x}, y:${rect.y} \n크기:width: ${rect.width}px, height:${rect.height}px\n위치: top:${rect.top}, left:${rect.left} `)
         }
     </script>
 </body>
