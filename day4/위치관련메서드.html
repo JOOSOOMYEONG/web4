@@ -143,6 +143,7 @@
             );
         }
 
+<<<<<<< HEAD
         
         // getBoundingClientRect
         function showRect(){
@@ -152,6 +153,14 @@
             alert(`위치 : x : ${rect.x} y : ${rect.y} \n
             크기 : ${rect.width}px height : ${rect.height}px \n
             위치 : top : ${rect.top} left : ${rect.left}`);
+=======
+        //getBoundingClientRect
+        function showRect(){
+            const box = document.getElementById("target");
+            const rect = box.getBoundingClientRect();
+            // x,y,width,height,top,left
+            alert(`위치: x:${rect.x}, y:${rect.y} \n크기:width: ${rect.width}px, height:${rect.height}px\n위치: top:${rect.top}, left:${rect.left} `)
+>>>>>>> 098627de55d28f3e8b2c6c54f7cec14bf032e187
         }
     </script>
 </body>

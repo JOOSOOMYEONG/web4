@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>스크롤 방향 찾기</title>
+=======
+    <title>스크롤방향찾기</title>
+>>>>>>> 098627de55d28f3e8b2c6c54f7cec14bf032e187
     <style>
         body {
             height: 5000px;
@@ -12,6 +16,7 @@
 </head>
 <body>
     <script>
+<<<<<<< HEAD
         let posY = 100;
 
         window.addEventListener('scroll', (e) => {
@@ -22,6 +27,23 @@
             }
             posY = window.scrollY;
         })
+=======
+        let posY = 0;
+
+        window.addEventListener('scroll',(e) => {
+            if(posY < window.scrollY){
+                console.log("내렸다");
+                console.log(window.scrollY);
+            }else{
+                console.log("올렸다");
+                //posY > window.scrollY
+                console.log(window.scrollY);
+            }
+            posY = window.scrollY;
+        })
+
+
+>>>>>>> 098627de55d28f3e8b2c6c54f7cec14bf032e187
     </script>
 </body>
 </html>

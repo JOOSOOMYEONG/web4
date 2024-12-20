@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비비고</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(233, 216, 195);
+            height: 5000px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgb(146, 121, 91);
+            align-items: center;
+            width: 100%;
+            height: 80px;
+            position: fixed;
+            transition: 0.5s;
+        }
+
+        .header_scroll_color_change {
+            color: #fff;
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .menu > li > a {
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .button_box >button {
+            padding: 10px 16px;
+            margin-right: 5px;
+            border-radius: 13px;
+            border: 1px solid rgb(82, 63, 41);
+            background-color: #fff;
+            color: rgb(146, 121, 91);
+        }
+
+        .header_active {
+            background-color: #fff;
+        }
+
+        .header_scroll_color {
+            color: rgb(146, 121, 91);
+        }
+
+        .button_box > button.header_button_active {
+            background-color: rgb(146, 121, 91);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="header">
+        <h1 class="header_scroll_color_change">비비고</h1>
+        <ul class="menu">
+            <li>
+                <a href="#" class="header_scroll_color_change">
+                    한식
+                </a>
+            </li>
+            <li>
+                <a href="#" class="header_scroll_color_change">
+                    중식
+                </a>
+            </li>
+            <li>
+                <a href="#" class="header_scroll_color_change">
+                    일식
+                </a>
+            </li>
+            <li>
+                <a href="#" class="header_scroll_color_change">
+                    양식
+                </a>
+            </li>
+        </ul>
+        <div class="button_box">
+            <button>
+                로그인
+            </button>
+            <button>
+                회원가입
+            </button>
+        </div>
+    </header>
+
+    <script>
+        const header = document.getElementById("header");
+
+        let headerHeight = header.getBoundingClientRect().height;
+        console.log(headerHeight);
+
+        const headerText = document.querySelectorAll(".header_scroll_color_change");
+
+        // getElementByClassName보다 querySelectorAll을 사용한 이유는 배열로 되어있기 때문에 forEach 사용 가능
+
+        const buttons = document.querySelectorAll(".button_box button");
+        // 버튼 불러오기
+
+        window.addEventListener("scroll", (e) => {
+            let scrollHeight = window.scrollY;
+
+            if(scrollHeight > headerHeight){
+                header.classList.add("header_active");
+                headerText.forEach((element) => {
+                    element.classList.add("header_scroll_color");
+                });
+                buttons.forEach((element) => {
+                element.classList.add("header_button_active")});
+            }else{
+                header.classList.remove("header_active");
+                headerText.forEach((element) => {
+                    element.classList.remove("header_scroll_color");
+                });
+                buttons.forEach((element) => {
+                element.classList.remove("header_button_active")});
+            }
+        });
+    </script>
+</body>
+</html>
