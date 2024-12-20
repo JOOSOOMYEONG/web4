@@ -9,29 +9,38 @@
     <!-- innerHeight, innerWidth -->
     <button onclick="shoeWindowSize()">브라우저 크기 보기</button>
     <p id="window_size"></p>
+    <!-- p 태그에는 아무것도 넣지 않고 -->
+     <hr>
+
 
     <!-- innerHTML -->
     <div id="content">
         <p>이 내용이 바뀔 거임</p>
     </div>
     <button onclick="changeContent()">innerHTML 내용 바꾸기</button>
+    <hr>
+    
 
     <!-- textcontent -->
-    <div id="text-example"></div>
-    <p>
-        저는
-        <b>
-            고양이
-        </b>
-        를 좋아합니다.
-    </p>
+    <div id="text-example">
+        <p>
+            저는
+            <b>
+                고양이
+            </b>
+            를 좋아합니다.
+        </p>
+    </div>
     <button onclick="showText()">텍스트만 보기</button>
-
+    <hr>
     <br>
+
 
     <!-- value -->
     <input type="text" id="name" value="기본값">
     <button onclick="updateValue()">값 변경하기</button>
+    <hr>
+
 
     <!-- offsetHeight, clientHeight, scrollHeight -->
     <!-- offsetWidth, clientWidth, scrollWidth -->
@@ -48,7 +57,10 @@
     </div>
     <button onclick="showHeights()">높이 정보</button>
     <button onclick="showWidths()">너비 정보</button>
+    <hr>
 
+
+    <!-- getBoundingClientRect -->
     <div
     id="target"
     style="
@@ -59,7 +71,7 @@
     >
     위치와 크기를 확인할 박스
     </div>
-    <button>박스 정보 보기</button>
+    <button onclick="showRect()">박스 정보 보기</button>
 
     <script>
         /*
@@ -85,6 +97,8 @@
             const width = window.innerWidth;
             document.getElementById("window_size").textContent = `높이:${height}, 너비:${width}`;
         }
+        // 높이와 너비를 textContent로 p 태그를 수정하라고 명령
+
 
         // innerHTML
         function changeContent(){
@@ -92,11 +106,13 @@
             div.innerHTML = "<h1>새로운 내용</h1><p>이제 변경되었습니다~</p>"
         }
 
+
         // textcontent
         function showText(){
             const div = document.getElementById("text-example");
             alert(div.textContent);
         }
+
 
         // value : 입력 필드의 값을 읽거나 수정한다
         function updateValue(){
@@ -104,6 +120,7 @@
             alert(`현재 값: ${input.value}`);
             input.value = "새로운 값";
         }
+
 
         // offsetHeight, clientHeight, scrollHeight
         function showHeights(){
@@ -115,6 +132,7 @@
             );
         }
 
+
         // offsetWidth, clientWidth, scrollWidth
         function showWidths(){
             const box = document.getElementById("box");
@@ -123,6 +141,17 @@
                 clientWidth : ${box.clientWidth}px \n
                 scrollWidth : ${box.scrollWidth}px`
             );
+        }
+
+        
+        // getBoundingClientRect
+        function showRect(){
+            const box = document.getElementById("target");
+            const rect = box.getBoundingClientRect();
+            // w, y, width, height, top, left
+            alert(`위치 : x : ${rect.x} y : ${rect.y} \n
+            크기 : ${rect.width}px height : ${rect.height}px \n
+            위치 : top : ${rect.top} left : ${rect.left}`);
         }
     </script>
 </body>
