@@ -51,6 +51,27 @@
         // 초기값
         viewBox.innerHTML = index
         // 아무것도 없는 빈 콘텐츠에 콘텐츠를 넣는다.
+
+        btns.children[0].addEventListener("click",prev);
+        btns.children[1].addEventListener("click",next);
+
+        function prev(){
+            if(index === 1){
+                index = 4;
+            }else{
+                index--;
+            }
+            viewBox.innerHTML = index;
+        };
+
+        function next(){
+            if(index === 4){
+                index = 1;
+            }else{
+                index++;
+            }
+            viewBox.innerHTML = index;
+        };
     </script>
 </body>
 </html>
