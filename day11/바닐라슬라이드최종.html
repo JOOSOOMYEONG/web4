@@ -77,16 +77,35 @@
             background-color: rgb(135, 204, 250);
             margin: 8px;
         }
+
+        .active {
+            background-color: rgb(0, 110, 255);
+        }
+
+        img {
+            width: 1000px;
+            height: 500px;
+        }
     </style>
 </head>
 <body>
     <div class="slide_container">
         <ul class="slide">
-            <li class="slider_01">1</li>
-            <li class="slider_02">2</li>
-            <li class="slider_03">3</li>
-            <li class="slider_04">4</li>
-            <li class="slider_05">5</li>
+            <li class="slider_01">
+                <img src="./dog_1.png" alt="">
+            </li>
+            <li class="slider_02">
+                <img src="./dog_2.png" alt="">
+            </li>
+            <li class="slider_03">
+                <img src="./dog_3.png" alt="">
+            </li>
+            <li class="slider_04">
+                <img src="./dog_4.png" alt="">
+            </li>
+            <li class="slider_05">
+                <img src="./dog_5.png" alt="">
+            </li>
         </ul>
     </div>
     <div class="slide_btns">
@@ -133,21 +152,77 @@
         function moveSlide(time){
             slide.style.transition = time + 'ms'; // time(1000) -> 1000ms;(1초)
             slide.style.transform = `translateX(-${index * sliderWidth}px)`;
+            updateDot();
         }
         // ------------------------------------------------------------------------
         // 버튼 클릭 함수
         // 버튼 클릭했을 때
 
         btns.children[0].addEventListener('click',prev);
-        // btns.children[2].addEventListener('click',next);
+        btns.children[2].addEventListener('click',next);
 
         function prev(){
             if(moveCheck){
                 moveCheck = false;
                 index--;
+                setTimeout(() => {
+                    if(index === 0){
+                        index = sliderLength - 2;
+                        moveSlide(0);
+                    }
+                    moveCheck = true;
+                }, 1000); //1초 동안 moveCheck를 막는다
+                moveSlide(1000);
+            }
+        };
+
+        function next(){
+            if(moveCheck){
+                moveCheck = false;
+                index++;
+                setTimeout(() => {
+                    if(index === sliderLength - 1){
+                    // slide.childElementCount - 1를 작성한 이유는 노드가 늘어나도 잘 적용될 수 있게 하기 위함.
+                        index = 1;
+                        moveSlide(0);
+                    }
+                    moveCheck = true;
+                }, 1000);
+                moveSlide(1000);
+            }
+        };
+
+        // ------------------------------------------------------------------------
+        // 닷 만들기
+        
+        for(let i = 0; i < sliderLength - 2; i++){
+            const makeDiv = document.createElement('div'); //div 태그 생성
+            makeDiv.classList.add('dot');
+            // 클래스 붙이는 법 !기억하기!
+            dotBox.appendChild(makeDiv);
+            makeDiv.addEventListener('click', () => {
+                index = i + 1; 
+                moveSlide(1000)
+            })
+        };
+        dotBox.children[0].classList.add('active');
+
+        function updateDot(){
+            for(let i = 0; i < sliderLength - 2; i++){
+                dotBox.children[i].classList.remove('active');
+                if(index === 0){
+                    dotBox.children[sliderLength - 3].classList.add('active');
+                }else if(index === sliderLength -1){
+                    dotBox.children[0].classList.add('active'); 
+                }else{
+                    dotBox.children[index - 1].classList.add('active');
+                }
             }
         }
 
+        setInterval(() => {
+            next();
+        }, 5000);
     </script>
 </body>
 </html>
