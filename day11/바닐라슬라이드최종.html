@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바닐라 슬라이드 최종</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .slide_container {
+            width: 1000px;
+            height: 500px;
+            font-size: 100px;
+            color: #FFF;
+            text-align: center;
+            line-height: 500px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .slide {
+            display: flex;
+            height: 500px;
+            transition: 1s;
+        }
+
+        .slide > li {
+            width: 1000px;
+            height: 500px;
+            list-style: none;
+        }
+
+        .slider_01{
+            background-color: rgb(156, 213, 252);
+        }
+        .slider_02{
+            background-color: rgb(135, 204, 250);
+        }
+        .slider_03{
+            background-color: rgb(114, 197, 252);
+        }
+        .slider_04{
+            background-color: rgb(69, 163, 226);
+        }
+        .slider_05{
+            background-color: rgb(45, 118, 167);
+        }
+
+        .slide_btns > button {
+            width: 100px;
+            height: 50px;
+            font-size: 30px;
+            color: #FFF;
+            background-color: rgb(0, 110, 255);
+            border: none;
+            cursor: pointer;
+        }
+
+        .slide_btns {
+            width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            margin: 30px auto;
+        }
+
+        .dot_box {
+            display: flex;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 500%;
+            background-color: rgb(135, 204, 250);
+            margin: 8px;
+        }
+
+        .active {
+            background-color: rgb(0, 110, 255);
+        }
+
+        img {
+            width: 1000px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide_container">
+        <ul class="slide">
+            <li class="slider_01">
+                <img src="./dog_1.png" alt="">
+            </li>
+            <li class="slider_02">
+                <img src="./dog_2.png" alt="">
+            </li>
+            <li class="slider_03">
+                <img src="./dog_3.png" alt="">
+            </li>
+            <li class="slider_04">
+                <img src="./dog_4.png" alt="">
+            </li>
+            <li class="slider_05">
+                <img src="./dog_5.png" alt="">
+            </li>
+        </ul>
+    </div>
+    <div class="slide_btns">
+        <button>prev</button>
+        <div class="dot_box"></div>
+        <button>next</button>
+    </div>
+
+    <script>
+        const btns = document.querySelector(".slide_btns");
+        const visiblePart = document.querySelector(".slide_container"); // 보여지는 부분
+        const slide = document.querySelector(".slide"); // ul
+        const dotBox = document.querySelector(".dot_box"); // 닷이 들어갈 비어있는 div
+        const sliderWidth = 1000;
+        let moveCheck = true;
+
+        // ------------------------------------------------------------------------
+
+        const first = slide.firstElementChild.cloneNode(true);
+        // firstElementChild : 현재 요소의 첫 번째 자식 요소를 반환함
+        const last = slide.lastElementChild.cloneNode(true);
+        // lastElementChild : 현재 요소의 마지막 자식 요소를 반환함
+        // cloneNode(true) : 선택 요소와 그 모든 자식 요소 전체를 복제한다
+
+        slide.appendChild(first)
+        // appendChild : 부모 요소에 자식 요소를 맨 마지막에 추가
+        slide.insertBefore(last,slide.firstElementChild);
+        // insertBefore : 특정 요소 앞에 새 노드를 추가
+        // parent.insertBefore(추가할 노드, 기준노드)
+
+        let sliderLength = slide.childElementCount; // li의 개수
+        console.log(sliderLength);
+
+        slide.style.width = sliderLength * sliderWidth + 'px'; // ul의 길이 조정
+
+        // ------------------------------------------------------------------------
+
+        // 처음 브라우저를 열 떄 보이는 인덱스 설정
+        let index = 1;
+        slide.style.transform = `translateX(-${index * sliderWidth}px)`;
+
+        // ------------------------------------------------------------------------
+
+        function moveSlide(time){
+            slide.style.transition = time + 'ms'; // time(1000) -> 1000ms;(1초)
+            slide.style.transform = `translateX(-${index * sliderWidth}px)`;
+            updateDot();
+        }
+        // ------------------------------------------------------------------------
+        // 버튼 클릭 함수
+        // 버튼 클릭했을 때
+
+        btns.children[0].addEventListener('click',prev);
+        btns.children[2].addEventListener('click',next);
+
+        function prev(){
+            if(moveCheck){
+                moveCheck = false;
+                index--;
+                setTimeout(() => {
+                    if(index === 0){
+                        index = sliderLength - 2;
+                        moveSlide(0);
+                    }
+                    moveCheck = true;
+                }, 1000); //1초 동안 moveCheck를 막는다
+                moveSlide(1000);
+            }
+        };
+
+        function next(){
+            if(moveCheck){
+                moveCheck = false;
+                index++;
+                setTimeout(() => {
+                    if(index === sliderLength - 1){
+                    // slide.childElementCount - 1를 작성한 이유는 노드가 늘어나도 잘 적용될 수 있게 하기 위함.
+                        index = 1;
+                        moveSlide(0);
+                    }
+                    moveCheck = true;
+                }, 1000);
+                moveSlide(1000);
+            }
+        };
+
+        // ------------------------------------------------------------------------
+        // 닷 만들기
+        
+        for(let i = 0; i < sliderLength - 2; i++){
+            const makeDiv = document.createElement('div'); //div 태그 생성
+            makeDiv.classList.add('dot');
+            // 클래스 붙이는 법 !기억하기!
+            dotBox.appendChild(makeDiv);
+            makeDiv.addEventListener('click', () => {
+                index = i + 1; 
+                moveSlide(1000)
+            })
+        };
+        dotBox.children[0].classList.add('active');
+
+        function updateDot(){
+            for(let i = 0; i < sliderLength - 2; i++){
+                dotBox.children[i].classList.remove('active');
+                if(index === 0){
+                    dotBox.children[sliderLength - 3].classList.add('active');
+                }else if(index === sliderLength -1){
+                    dotBox.children[0].classList.add('active'); 
+                }else{
+                    dotBox.children[index - 1].classList.add('active');
+                }
+            }
+        }
+
+        setInterval(() => {
+            next();
+        }, 5000);
+    </script>
+</body>
+</html>
