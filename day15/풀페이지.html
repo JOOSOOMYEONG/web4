@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>풀페이지</title>
+    <style>
+
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        .menu_item {
+            list-style: none;
+            margin: 16px 0;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .menu_item.active {
+            color: #000;
+        }
+        
+        /*
+        1024 이하일 때 body에 overflow auto로 변경
+        */
+
+        @media (max-width: 1024px) {
+            body {
+                overflow: auto;
+            }
+
+            .section {
+                height: auto;
+            }
+
+            .menu {
+                display: none;
+            }
+        };
+    </style>
+</head>
+<body>
+    <div id="fullpage">
+        <section class="section"
+        style="background-color: rgb(255, 223, 220);">
+            section1
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(255, 212, 208);">
+            section2
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(255, 191, 185);">
+            section3
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(255, 167, 159);">
+            section4
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(255, 142, 132);">
+            section5
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(241, 118, 107);">
+            section6
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(228, 105, 94);">
+            section7
+        </section>
+        
+        <section class="section"
+        style="background-color: rgb(218, 86, 74);">
+            section8
+        </section>
+    </div>
+
+    <ul class="menu" id="menu">
+        <li class="menu_item" data-index="0">
+            Section 1
+        </li>
+        <li class="menu_item" data-index="1">
+            Section 2
+        </li>
+        <li class="menu_item" data-index="2">
+            Section 3
+        </li>
+        <li class="menu_item" data-index="3">
+            Section 4
+        </li>
+        <li class="menu_item" data-index="4">
+            Section 5
+        </li>
+        <li class="menu_item" data-index="5">
+            Section 6
+        </li>
+        <li class="menu_item" data-index="6">
+            Section 7
+        </li>
+        <li class="menu_item" data-index="7">
+            Section 8
+        </li>
+    </ul>
+
+    <script>
+        let currentSectionIndex = 0; //현재 섹션 인덱스
+        const sections = document.querySelectorAll(".section");
+        const menuItems = document.querySelectorAll(".menu_item");
+        const totalSections = sections.length;
+        let isScrolling = false; // 스크롤 중인지 여부를 나타내는 변수
+        let isFullPageScrollActive = false; // 현재 풀페이지 스크롤이 활성화 상태인지 확인
+        const breakPoint = 1024;
+
+        // ----------------------------------------------------------------
+        // 메뉴 색 상태 업데이트
+
+        function updateMenu(){
+            menuItems.forEach((item,index) => {
+                if(index === currentSectionIndex){
+                    item.classList.add("active");
+                }else{
+                    item.classList.remove("active");
+                }
+            });
+            // forEach Day13 > tapmenu에도 사용했음
+        };
+
+        // ----------------------------------------------------------------
+        // 메뉴 클릭 이벤트
+
+        menuItems.forEach((item) => {
+            item.addEventListener("click", (e) => {
+                const index = parseInt(e.target.dataset.index, 10);
+                // dataset : data-@@를 가져올 떄 사용
+                // parseInt() : 문자열을 숫자로 변환
+                currentSectionIndex = index;
+                sections[currentSectionIndex].scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
+                // scrollIntoView : 특정 html 요소가 화면에 보이도록 자동 스크롤한다.
+                // behavior:"smooth" : 스크롤을 부드럽게 이동(기본값 auto)
+                // block:"start" : 해당 섹션을 화면 맨 위에 맞춰서 스크롤한다.
+                updateMenu();
+            });
+        });
+
+        // ----------------------------------------------------------------
+        // 스크롤 이벤트 처리
+
+        function handleScroll(event){
+            if(window.innerWidth <= breakPoint)return;
+            // return : 즉시 종료
+            if(isScrolling) return;
+            isScrolling = true;
+
+            if(event.deltaY > 0){
+                // event.deltaY : 밑으로 스크롤하면 양수, 위로 올려서 문서를 위에 올릴 시에는 음수를 반환
+                // 마지막 섹션에 대한 예외 처리
+                currentSectionIndex = Math.min(currentSectionIndex + 1, totalSections -1);
+                // Math.min : 최소값을 반환
+                // currentSectionIndex + 1 : 현재 인덱스 +1 (다음 인덱스)
+            }else{ㄴ
+                currentSectionIndex = Math.max(currentSectionIndex -1,0);
+                // 첫 번쨰 섹션에 대한 예외 처리
+            }
+        };
+    </script>
+
+</body>
+</html>
