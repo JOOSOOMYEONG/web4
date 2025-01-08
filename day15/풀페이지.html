@@ -189,7 +189,38 @@
                 currentSectionIndex = Math.max(currentSectionIndex -1,0);
                 // 첫 번쨰 섹션에 대한 예외 처리
             }
+            sections[currentSectionIndex].scrollIntoView({
+                behavior:"smooth",
+                block:"start",
+            });
+            updateMenu();
+            setTimeout(() => (isScrolling = false),800);
         };
+
+        // ----------------------------------------------------------------
+        // 초기화함수
+
+        function initFullPageScroll(){
+            sections.forEach((section,index) => {
+                const rect = section.getBoundingClientRect();//각 섹션의 화면 정보
+                if(rect.top >= 0 && rect.top < window.innerHeight){
+                    currentSectionIndex = index;
+                }
+            });
+            isScrolling = false;
+            if(window.innerWidth > breakPoint && !isFullPageScrollActive){
+                isFullPageScrollActive = true; //풀페이지 활성화
+                document.body.style.overflow = "hidden";
+                window.addEventListener("wheel",handleScroll);
+            } else if(window.innerWidth <= breakPoint && isFullPageScrollActive){
+                isFullPageScrollActive = false; //풀페이지 비활성화 
+                document.body.style.overflow = "auto";
+                window.removeEventListener("wheel",handleScroll);
+            }
+        }
+
+        window.addEventListener("resize",initFullPageScroll);
+        initFullPageScroll();
     </script>
 
 </body>
